@@ -6,13 +6,14 @@
 
 ---
 
-## Test Scenario: UK Government AI Chatbot Project
+## Test Scenario: UK Government Microsoft 365 Migration Project
 
-We'll test all ArcKit commands by simulating a realistic UK Government project:
+We'll test all ArcKit commands by simulating a realistic UK Government cloud migration project:
 
-**Project**: Benefits Eligibility Chatbot for Department for Work and Pensions (DWP)
-**Type**: HIGH-RISK AI system (affects access to benefits)
-**Requirements**: TCoP compliance, AI Playbook compliance, ATRS publication
+**Project**: Microsoft 365 Cloud Migration for Cabinet Office
+**Type**: MEDIUM-RISK system (digital transformation and cloud adoption)
+**Scope**: Migrate 5,000 civil servants from on-premise Exchange/SharePoint to Microsoft 365 GCC High
+**Requirements**: TCoP compliance, Cloud First strategy, UK data residency, NCSC security controls, accessibility (WCAG 2.2 AA)
 
 ---
 
