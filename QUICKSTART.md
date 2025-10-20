@@ -38,8 +38,9 @@ uv pip install git+https://github.com/tractorjuice/arc-kit.git
 # Check commands installed
 ls -1 .claude/commands/
 
-# Should show 16 commands:
+# Should show 17 commands:
 # - arckit.principles.md
+# - arckit.stakeholders.md
 # - arckit.requirements.md
 # - arckit.wardley.md
 # - arckit.diagram.md
@@ -144,7 +145,7 @@ tree projects/
 wc -l projects/001-benefits-chatbot/*.md
 
 # Check command count
-ls -1 .claude/commands/ | wc -l  # Should be 16
+ls -1 .claude/commands/ | wc -l  # Should be 17
 
 # Check template count
 ls -1 .arckit/templates/ | wc -l  # Should be 19
