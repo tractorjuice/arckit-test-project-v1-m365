@@ -19,18 +19,18 @@
 
 ## 📋 Test Scenario
 
-**Project**: Benefits Eligibility Chatbot for UK Department for Work and Pensions (DWP)
+**Project**: Microsoft 365 Cloud Migration for Cabinet Office
 
 **Details**:
-- **System**: HIGH-RISK AI chatbot using GPT-4
-- **Purpose**: Answer citizen questions about Universal Credit, JSA, disability benefits
-- **Requirements**: 10K concurrent users, UK GDPR, WCAG 2.2 AA, human-in-the-loop
-- **Compliance**: Technology Code of Practice, AI Playbook, ATRS required
-- **Procurement**: Via G-Cloud Digital Marketplace (£1.5M, 9 months)
+- **System**: MEDIUM-RISK digital transformation and cloud adoption project
+- **Scope**: Migrate 5,000 civil servants from on-premise Exchange/SharePoint to Microsoft 365 GCC High
+- **Requirements**: TCoP compliance, Cloud First strategy, UK data residency, NCSC security controls
+- **Compliance**: Technology Code of Practice, UK GDPR, accessibility (WCAG 2.2 AA)
+- **Procurement**: Via G-Cloud Digital Marketplace
 
 ---
 
-## ✅ Pre-Installed Commands (14 total)
+## ✅ Pre-Installed Commands (16 total)
 
 All commands ready in `.claude/commands/`:
 
@@ -150,7 +150,7 @@ Plus analysis report from `/arckit.analyze` showing governance health score (B g
 ## 📖 More Information
 
 - **ArcKit Repository**: https://github.com/tractorjuice/arc-kit
-- **Latest Release**: v0.3.0 - ServiceNow Service Management Edition
+- **Latest Release**: v0.2.1
 - **Issues**: https://github.com/tractorjuice/arc-kit/issues
 
 ---
