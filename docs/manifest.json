@@ -1,0 +1,55 @@
+{
+  "generated": "2026-01-22T00:00:00Z",
+  "repository": {
+    "owner": "tractorjuice",
+    "name": "arckit-test-project-v1-m365",
+    "branch": "main"
+  },
+  "global": [
+    {
+      "path": ".arckit/memory/architecture-principles.md",
+      "title": "Architecture Principles",
+      "category": "Architecture"
+    }
+  ],
+  "projects": [
+    {
+      "id": "001-exchange-online-migration",
+      "name": "Exchange Online Migration",
+      "documents": [
+        {
+          "path": "projects/001-exchange-online-migration/requirements.md",
+          "title": "Requirements",
+          "category": "Discovery"
+        },
+        {
+          "path": "projects/001-exchange-online-migration/sow.md",
+          "title": "Statement of Work",
+          "category": "Procurement"
+        },
+        {
+          "path": "projects/001-exchange-online-migration/evaluation-criteria.md",
+          "title": "Evaluation Criteria",
+          "category": "Procurement"
+        },
+        {
+          "path": "projects/001-exchange-online-migration/traceability-matrix.md",
+          "title": "Traceability Matrix",
+          "category": "Governance"
+        }
+      ],
+      "diagrams": [
+        {
+          "path": "projects/001-exchange-online-migration/diagrams/container-m365-exchange-online.md",
+          "title": "M365 Exchange Online Container Diagram"
+        },
+        {
+          "path": "projects/001-exchange-online-migration/diagrams/sequence-identity-authentication.md",
+          "title": "Identity Authentication Sequence Diagram"
+        }
+      ],
+      "decisions": [],
+      "vendors": []
+    }
+  ]
+}
