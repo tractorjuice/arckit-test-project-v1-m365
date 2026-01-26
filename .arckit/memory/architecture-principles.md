@@ -1,11 +1,32 @@
 # Cabinet Office Microsoft 365 Architecture Principles
 
-**Document Type**: Architectural Governance
-**Version**: 1.0
-**Effective Date**: 2025-10-17
-**Last Updated**: 2025-10-17
-**Owner**: Enterprise Architecture Team, Cabinet Office
-**Status**: DRAFT
+> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.principles`
+
+## Document Control
+
+| Field | Value |
+|-------|-------|
+| **Document ID** | ARC-GLOBAL-PRIN-v1.1 |
+| **Document Type** | Enterprise Architecture Principles |
+| **Project** | Microsoft 365 GCC-H Migration (Global) |
+| **Classification** | OFFICIAL |
+| **Status** | APPROVED |
+| **Version** | 1.1 |
+| **Created Date** | 2025-10-17 |
+| **Last Modified** | 2026-01-26 |
+| **Review Cycle** | Annual |
+| **Next Review Date** | 2027-01-26 |
+| **Owner** | Enterprise Architecture Team, Cabinet Office |
+| **Reviewed By** | PENDING |
+| **Approved By** | PENDING |
+| **Distribution** | All M365 Project Teams, IT Department |
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| 1.0 | 2025-10-17 | ArcKit AI | Initial creation from `/arckit.principles` command | PENDING | PENDING |
+| 1.1 | 2026-01-26 | ArcKit AI | Updated to align with template v0.11.1 format | PENDING | PENDING |
 
 ---
 
@@ -18,6 +39,8 @@ This document establishes the immutable principles governing the Microsoft 365 d
 **Compliance**: Mandatory unless exception approved by CTO/CISO
 **Regulatory Context**: UK Technology Code of Practice, GDS Service Standard, Government Security Classifications
 
+**Philosophy**: These principles are **technology-agnostic** - they describe WHAT qualities the architecture must have, not HOW to implement them with specific products. Technology selection happens during research and design phases guided by these principles.
+
 ---
 
 ## I. Strategic Principles
@@ -25,28 +48,22 @@ This document establishes the immutable principles governing the Microsoft 365 d
 ### 1. Cloud-First with UK Sovereignty
 
 **Principle Statement**:
-All new solutions MUST leverage cloud-native services following Microsoft Azure UK regions (UK South, UK West) to meet data sovereignty and UK Government Technology Code of Practice (TCoP) requirements.
+All new solutions MUST leverage cloud-native services hosted in UK data centres to meet data sovereignty and UK Government Technology Code of Practice (TCoP) requirements.
 
 **Rationale**:
 Cloud platforms provide resilience, security, and cost efficiency while meeting Cabinet Office obligations under TCoP Point 3 (Use cloud first) and ensuring UK data sovereignty for OFFICIAL classified information.
 
 **Implications**:
-- All M365 data stored in UK Azure regions (UK South primary, UK West disaster recovery)
-- Prefer Microsoft managed services (SharePoint Online, Teams, Exchange Online) over custom deployments
-- Design for Azure Active Directory (now Entra ID) integration
-- Leverage Microsoft 365 Defender, Purview, and compliance tools
+- All data stored in UK-based data centres
+- Prefer managed cloud services over custom deployments
+- Design for cloud-native identity and access management
+- Leverage cloud-native security, compliance, and governance tools
 - Multi-region resilience within UK geographic boundaries
-
-**Approved Providers**:
-- **Primary Cloud**: Microsoft Azure UK regions (UK South, UK West)
-- **M365 Services**: Exchange Online, SharePoint Online, Teams, OneDrive for Business
-- **Identity**: Azure AD (Entra ID) with Conditional Access
-- **Prohibited**: Non-UK data residency, on-premises Exchange/SharePoint expansion
 
 **Data Sovereignty Requirements**:
 - OFFICIAL data: UK regions only
 - OFFICIAL-SENSITIVE: UK regions with enhanced encryption
-- Customer Lockbox enabled for Microsoft support access
+- Customer lockbox controls enabled for vendor support access
 - Data residency attestation documented
 
 **Exceptions**:
@@ -55,10 +72,10 @@ Cloud platforms provide resilience, security, and cost efficiency while meeting 
 - Edge devices requiring local caching (with encryption)
 
 **Validation Gates**:
-- [ ] All M365 workloads configured for UK data residency
-- [ ] Infrastructure-as-Code defined (Terraform/Bicep)
-- [ ] UK South/UK West multi-region strategy documented
-- [ ] Cost model with FinOps tags defined
+- [ ] All workloads configured for UK data residency
+- [ ] Infrastructure defined as code and version-controlled
+- [ ] Multi-region disaster recovery strategy documented
+- [ ] Cost model with financial governance tags defined
 - [ ] Data sovereignty attestation signed
 
 ---
@@ -69,7 +86,7 @@ Cloud platforms provide resilience, security, and cost efficiency while meeting 
 All digital services MUST meet the 14-point GDS Service Standard and Technology Code of Practice to ensure accessible, usable, and inclusive government services.
 
 **Rationale**:
-Cabinet Office sets the standard for UK Government digital services. Our M365 deployment must exemplify best practice in accessibility, user-centered design, and open standards.
+Cabinet Office sets the standard for UK Government digital services. All deployments must exemplify best practice in accessibility, user-centred design, and open standards.
 
 **GDS Service Standard Key Points**:
 1. **Understand users and their needs** (User research mandatory)
@@ -118,7 +135,7 @@ Cabinet Office sets the standard for UK Government digital services. Our M365 de
 
 ---
 
-### 3. Security by Design (OFFICIAL Classification)
+### 3. Security by Design (NON-NEGOTIABLE)
 
 **Principle Statement**:
 All architectures MUST implement UK Government Security Classification Policy with Zero Trust principles. Security is NON-NEGOTIABLE and appropriate to OFFICIAL data handling.
@@ -129,7 +146,7 @@ Cabinet Office handles OFFICIAL and OFFICIAL-SENSITIVE information requiring pro
 **Government Security Classification Tiers**:
 1. **OFFICIAL**: Majority of Cabinet Office information (default classification)
 2. **OFFICIAL-SENSITIVE**: Subset requiring enhanced handling (Cabinet papers, policy development)
-3. **SECRET**: Not handled in M365 environment (separate accreditation required)
+3. **SECRET**: Not handled in standard cloud environments (separate accreditation required)
 
 **NCSC Cloud Security Principles Compliance**:
 All 14 NCSC Cloud Security Principles MUST be addressed:
@@ -140,30 +157,30 @@ All 14 NCSC Cloud Security Principles MUST be addressed:
 5. Operational security (patching, monitoring)
 6. Personnel security (Baseline Personnel Security Standard - BPSS minimum)
 7. Secure development (DevSecOps)
-8. Supply chain security (Microsoft supply chain assurance)
+8. Supply chain security (vendor supply chain assurance)
 9. Secure user management (MFA mandatory)
-10. Identity and authentication (Azure AD with Conditional Access)
-11. External interface protection (DLP, Conditional Access)
+10. Identity and authentication (Conditional Access policies)
+11. External interface protection (DLP, access controls)
 12. Secure service administration (Privileged Identity Management)
-13. Audit information for users (M365 audit logs, 7-year retention)
+13. Audit information for users (Audit logs, 7-year retention)
 14. Secure use of the service (end-user security awareness)
 
-**Zero Trust Pillars for M365**:
-1. **Verify explicitly**: Every access request fully authenticated and authorized
+**Zero Trust Pillars**:
+1. **Verify explicitly**: Every access request fully authenticated and authorised
 2. **Least privilege access**: Just-in-time, just-enough-access (JIT/JEA)
-3. **Assume breach**: Minimize blast radius, segment access, verify end-to-end encryption
+3. **Assume breach**: Minimise blast radius, segment access, verify end-to-end encryption
 
 **Mandatory Security Controls**:
 - [ ] Multi-factor authentication (MFA) mandatory for all users (no exceptions)
 - [ ] Conditional Access policies enforcing device compliance
-- [ ] Microsoft Purview Information Protection with sensitivity labels (OFFICIAL, OFFICIAL-SENSITIVE)
-- [ ] Data Loss Prevention (DLP) policies preventing unauthorized sharing
-- [ ] Microsoft Defender for Office 365 (Plan 2) for threat protection
-- [ ] Encryption at rest (Microsoft-managed keys minimum, customer-managed optional for OFFICIAL-SENSITIVE)
+- [ ] Information protection with sensitivity labels (OFFICIAL, OFFICIAL-SENSITIVE)
+- [ ] Data Loss Prevention (DLP) policies preventing unauthorised sharing
+- [ ] Advanced threat protection enabled
+- [ ] Encryption at rest (managed keys minimum, customer-managed optional for OFFICIAL-SENSITIVE)
 - [ ] Encryption in transit (TLS 1.3+ mandatory)
 - [ ] Privileged Identity Management (PIM) for admin roles
-- [ ] Azure AD Identity Protection for risk-based policies
-- [ ] Microsoft Sentinel or SIEM integration for security monitoring
+- [ ] Risk-based identity protection policies
+- [ ] SIEM integration for security monitoring
 - [ ] Audit logging with 7-year retention (OFFICIAL requirement)
 - [ ] Regular penetration testing and CHECK-certified assessments
 
@@ -177,7 +194,7 @@ All 14 NCSC Cloud Security Principles MUST be addressed:
 - NCSC Cloud Security Principles
 - ISO 27001 / Government Security Classifications Policy
 - HMG Security Policy Framework
-- GDPR (UK GDPR)
+- UK GDPR
 
 **Exceptions**:
 - NONE. Security principles are non-negotiable.
@@ -202,28 +219,20 @@ Cabinet Office has a legal and moral obligation to ensure government services ar
 
 **Accessibility Requirements**:
 - **WCAG 2.2 AA**: Mandatory minimum (targeting AAA where feasible)
-- **Perceivable**: Alt text, captions, transcripts, sufficient color contrast (4.5:1 minimum)
+- **Perceivable**: Alt text, captions, transcripts, sufficient colour contrast (4.5:1 minimum)
 - **Operable**: Keyboard navigation, no keyboard traps, sufficient time limits
 - **Understandable**: Plain English (reading age 9 per GDS guidelines), consistent navigation
 - **Robust**: Compatible with assistive technologies (JAWS, NVDA, ZoomText)
 
-**M365 Accessibility Features** (MUST be enabled):
-- Accessibility Checker in Office apps
-- Immersive Reader in SharePoint and Teams
-- Live captions in Teams meetings
-- Screen reader compatibility
-- Keyboard shortcuts documented
-- High contrast mode support
-
 **Content Accessibility**:
-- All documents (Word, Excel, PowerPoint) MUST pass Accessibility Checker before publishing
+- All documents MUST pass Accessibility Checker before publishing
 - PDF/A format for archival documents with tagged structure
 - Video content MUST have captions and transcripts
 - Forms MUST be screen reader accessible
 - Colour MUST NOT be the only means of conveying information
 
 **Testing Requirements**:
-- Automated testing with Pa11y, Axe, or WAVE
+- Automated testing with accessibility scanning tools
 - Manual testing with keyboard navigation
 - Screen reader testing (NVDA/JAWS)
 - User testing with people with disabilities
@@ -248,49 +257,37 @@ Cabinet Office has a legal and moral obligation to ensure government services ar
 
 ---
 
-### 5. Open Standards and Interoperability
+### 5. Observability and Operational Excellence
 
 **Principle Statement**:
-All systems MUST use open standards for data formats, APIs, and protocols to ensure interoperability, avoid vendor lock-in, and enable cross-government collaboration.
+All systems MUST emit structured telemetry (logs, metrics, traces) enabling real-time monitoring, troubleshooting, and capacity planning.
 
 **Rationale**:
-TCoP Point 4 requires open standards to ensure long-term sustainability, user choice, and cross-government integration. Cabinet Office must lead by example.
+We cannot operate what we cannot observe. Instrumentation is a first-class architectural requirement, not an afterthought.
 
-**Compulsory Open Standards** (per Open Standards Board):
-- **Document formats**: ODF 1.2 (Open Document Format) for editable documents
-- **Email**: SMTP, IMAP (not proprietary connectors)
-- **Calendar**: iCalendar (RFC 5545)
-- **Contacts**: vCard (RFC 6350)
-- **Web browsing**: HTML5, CSS3
-- **APIs**: RESTful APIs with OpenAPI 3.0+ specifications
-- **Authentication**: OAuth 2.0, OpenID Connect (OIDC), SAML 2.0
+**Telemetry Requirements**:
+- **Logging**: Structured logs with correlation IDs
+- **Metrics**: Request volume, latency percentiles (p50, p95, p99), error rates
+- **Tracing**: Distributed trace context for request flows
+- **Alerting**: Service Level Objective (SLO)-based alerting with actionable runbooks
 
-**M365 Open Standards Compliance**:
-- SharePoint: Support ODF export/import alongside Office formats
-- Exchange Online: Standards-compliant email (SMTP/IMAP/POP3)
-- Teams: Standards-based calling (SIP/RTP where possible)
-- Microsoft Graph API: OpenAPI documented endpoints
+**Required Instrumentation**:
+- Request volume, latency distribution, error rate
+- Resource utilisation (CPU, memory, I/O, network)
+- Business metrics (transactions, revenue impact, user actions)
+- Security events (auth failures, policy violations, suspicious patterns)
 
-**Data Portability**:
-- Users can export data in open formats
-- No proprietary lock-in for citizen data
-- Migration paths to alternative solutions documented
-
-**Cross-Government Integration**:
-- GOV.UK Verify / One Login integration
-- Government Digital Identity (GDI) alignment
-- Cross-government APIs follow GDS API standards
-- Shared platforms (e.g., GOV.UK Notify, GOV.UK Pay) prioritized
-
-**Exceptions**:
-- Specialized functionality where no open standard exists (document with rationale)
-- Legacy integrations during migration period (max 18 months with roadmap)
+**Log Retention**:
+- **Security/audit logs**: As required by compliance (typically 1-7 years)
+- **Application logs**: Sufficient for troubleshooting (typically 30-90 days)
+- **Metrics**: Long-term trends (typically 1-2 years with aggregation)
 
 **Validation Gates**:
-- [ ] Open standards compliance verified
-- [ ] Data export capability in open formats tested
-- [ ] API specifications published (OpenAPI 3.0+)
-- [ ] Cross-government interoperability tested where applicable
+- [ ] Logging, metrics, tracing instrumented
+- [ ] Dashboards and alerts configured
+- [ ] Service Level Objectives (SLOs) and Service Level Indicators (SLIs) defined
+- [ ] Runbooks created for common failure scenarios
+- [ ] Capacity planning metrics tracked
 
 ---
 
@@ -306,22 +303,15 @@ Cabinet Office handles sensitive government information requiring clear classifi
 
 **Data Classification and Handling**:
 
-| Classification | Description | M365 Sensitivity Label | Storage Location | Encryption | Sharing Restrictions |
-|----------------|-------------|------------------------|------------------|------------|---------------------|
-| **OFFICIAL** | Routine public sector business | OFFICIAL | UK regions | TLS 1.3 + AES-256 at rest | Within HMG with need-to-know |
-| **OFFICIAL-SENSITIVE** | Damaging if lost/stolen (policy, personnel) | OFFICIAL-SENSITIVE | UK regions | Customer-managed keys | Restricted distribution |
-| **SECRET** | Serious damage to national interests | N/A - Not in M365 | Accredited SECRET system | N/A | N/A |
-
-**M365 Information Protection Configuration**:
-- Microsoft Purview sensitivity labels matching GSC tiers
-- Automatic labeling based on content inspection (keywords, regex)
-- Labels embedded in document metadata (persistent protection)
-- Visual markings (header/footer) applied automatically
-- Encryption applied to OFFICIAL-SENSITIVE content
+| Classification | Description | Storage Location | Encryption | Sharing Restrictions |
+|----------------|-------------|------------------|------------|---------------------|
+| **OFFICIAL** | Routine public sector business | UK regions | TLS 1.3 + AES-256 at rest | Within HMG with need-to-know |
+| **OFFICIAL-SENSITIVE** | Damaging if lost/stolen (policy, personnel) | UK regions | Customer-managed keys | Restricted distribution |
+| **SECRET** | Serious damage to national interests | N/A - Accredited system | N/A | N/A |
 
 **Data Residency Requirements**:
-- **OFFICIAL**: UK South (primary), UK West (DR)
-- **OFFICIAL-SENSITIVE**: UK South (primary), UK West (DR), customer-managed keys
+- **OFFICIAL**: UK data centres (primary), UK (DR)
+- **OFFICIAL-SENSITIVE**: UK data centres (primary), UK (DR), customer-managed keys
 - **Multi-Geo**: NOT enabled (all data remains in UK)
 - **Data Location Validation**: Monthly attestation reports
 
@@ -330,7 +320,7 @@ Cabinet Office handles sensitive government information requiring clear classifi
 - Detect and protect sensitive information types (NI numbers, passport numbers, policy document patterns)
 - Prevent upload to personal cloud services
 - Alert on bulk downloads exceeding thresholds
-- Endpoint DLP for devices accessing M365
+- Endpoint DLP for devices accessing services
 
 **GDPR and UK Data Protection Act 2018**:
 - Privacy Impact Assessment (PIA) for personal data processing
@@ -347,10 +337,10 @@ Cabinet Office handles sensitive government information requiring clear classifi
 
 **Exceptions**:
 - Cross-border data transfers require SIRO approval with Standard Contractual Clauses (SCCs)
-- Anonymized/pseudonymized data for analytics (with DPO approval)
+- Anonymised/pseudonymised data for analytics (with DPO approval)
 
 **Validation Gates**:
-- [ ] All content labeled with sensitivity classification
+- [ ] All content labelled with sensitivity classification
 - [ ] UK data residency validated
 - [ ] DLP policies configured and tested
 - [ ] Retention schedules applied
@@ -358,852 +348,374 @@ Cabinet Office handles sensitive government information requiring clear classifi
 
 ---
 
-### 7. Data Quality and Lifecycle Management
+### 7. Data Quality and Lineage
 
 **Principle Statement**:
-Data MUST be accurate, complete, and managed through defined lifecycle stages with documented lineage and quality controls.
+Data pipelines MUST maintain data quality standards and provide end-to-end lineage for auditability and troubleshooting.
 
 **Rationale**:
 Poor data quality undermines policy decisions and service delivery. Cabinet Office requires high-quality data with clear ownership and lifecycle management.
 
-**Data Quality Standards**:
-- **Accuracy**: Validated at point of entry, regular quality checks
-- **Completeness**: Required fields enforced
-- **Consistency**: Standardized formats (dates, addresses)
-- **Timeliness**: Freshness indicators, version control
-- **Validity**: Business rule validation
+**Quality Standards**:
+- **Completeness**: No unexpected nulls in required fields
+- **Consistency**: Cross-system data reconciliation
+- **Accuracy**: Validation rules and constraints enforced at source
+- **Timeliness**: Freshness Service Level Agreements (SLAs) defined and monitored
+
+**Lineage Requirements**:
+- Source-to-target mapping documented for all data flows
+- Transformation logic version-controlled and reviewable
+- Data quality metrics tracked per pipeline
+- Impact analysis capability for schema changes
 
 **Data Lifecycle Stages**:
 1. **Creation/Capture**: Classification at source, quality validation
-2. **Active Use**: Accessible to authorized users, version controlled
+2. **Active Use**: Accessible to authorised users, version controlled
 3. **Review**: Periodic review of accuracy and relevance
-4. **Archive**: Moved to long-term storage (Azure Archive Storage)
+4. **Archive**: Moved to long-term storage
 5. **Disposal**: Secure deletion after retention period
-
-**Microsoft Purview Data Catalog**:
-- Data assets registered and documented
-- Data owners and stewards assigned
-- Lineage tracking for reports and analytics
-- Glossary terms for consistent terminology
-
-**SharePoint and OneDrive Governance**:
-- Site lifecycle management (creation, review, archival, deletion)
-- Unused sites automatically archived after 12 months inactivity
-- Orphaned content identified and reassigned
-- External sharing monitored and reported
 
 **Validation Gates**:
 - [ ] Data owners assigned for key datasets
 - [ ] Quality rules defined and enforced
 - [ ] Lifecycle policies configured
-- [ ] Purview Data Catalog populated
+- [ ] Data catalogue populated
 
 ---
 
-### 8. Privacy by Design
+### 8. Single Source of Truth
 
 **Principle Statement**:
-Privacy MUST be embedded into system design from the outset, with Privacy Impact Assessments (PIAs) for all personal data processing.
+Every data domain MUST have a single authoritative source. Derived copies must be clearly labelled and synchronised.
 
 **Rationale**:
-TCoP Point 7 (Make privacy integral) and UK GDPR require proactive privacy protection, not reactive compliance.
+Multiple authoritative sources create inconsistency, reconciliation overhead, and data integrity issues.
 
-**Privacy Principles (ICO Guidelines)**:
-1. **Lawfulness, fairness, transparency**: Clear lawful basis, privacy notices
-2. **Purpose limitation**: Process only for specified purposes
-3. **Data minimization**: Collect only necessary data
-4. **Accuracy**: Keep personal data accurate and up-to-date
-5. **Storage limitation**: Retain only as long as necessary
-6. **Integrity and confidentiality**: Appropriate security measures
-7. **Accountability**: Demonstrate compliance
-
-**Privacy Impact Assessment (PIA) Triggers**:
-- New processing of personal data
-- Significant change to existing processing
-- Large-scale processing of special category data
-- Systematic monitoring (e.g., audit logging)
-- Automated decision-making
-
-**M365 Privacy Controls**:
-- Subject Access Request (SAR) tooling (eDiscovery, Content Search)
-- Right to erasure workflows
-- Consent management (where consent is lawful basis)
-- Data breach detection and notification (<72 hours to ICO)
-- Privacy notices embedded in services
-
-**Third-Party Processors**:
-- Data Processing Agreements (DPAs) with Microsoft
-- Sub-processor transparency (Microsoft Trust Center)
-- International transfers safeguarded (SCCs, adequacy decisions)
+**Implications**:
+- Identify the system of record for each data domain
+- Derived/cached copies are read-only and clearly labelled as such
+- Synchronisation strategy defined for all derived copies
+- Avoid bidirectional synchronisation (creates split-brain scenarios)
 
 **Validation Gates**:
-- [ ] PIA completed and DPO approved
-- [ ] Lawful basis documented
-- [ ] Privacy notice published
-- [ ] SAR procedures tested
-- [ ] Data breach response plan in place
+- [ ] System of record identified for each data entity
+- [ ] Derived copies documented with sync frequency
+- [ ] No bidirectional sync without conflict resolution strategy
+- [ ] Master data management (MDM) strategy for shared reference data
 
 ---
 
-## III. Technology Standards
+## III. Integration Principles
 
-### 9. Approved M365 Technology Stack
+### 9. Loose Coupling
 
 **Principle Statement**:
-M365 solutions MUST leverage approved Microsoft and partner technologies to ensure supportability, security, and license compliance.
+Systems MUST be loosely coupled through published interfaces, avoiding shared databases, file systems, or tight runtime dependencies.
 
-**Core M365 Services** (Approved):
-- **Collaboration**: Microsoft Teams, SharePoint Online, OneDrive for Business
-- **Communication**: Exchange Online, Outlook, Yammer
-- **Productivity**: Microsoft 365 Apps (Word, Excel, PowerPoint, OneNote)
-- **Security & Compliance**: Microsoft Purview, Defender for Office 365, Azure AD (Entra ID)
-- **Workflow**: Power Automate (formerly Flow)
-- **Forms**: Microsoft Forms
-- **Planning**: Microsoft Planner, Microsoft To Do, Microsoft Lists
+**Rationale**:
+Loose coupling enables independent deployment, technology diversity, team autonomy, and system evolution without breaking dependencies.
 
-**Power Platform** (Approved with Governance):
-- **Power Apps**: Canvas and Model-driven apps (DLP policies enforced)
-- **Power Automate**: Workflows and RPA (premium connectors require approval)
-- **Power BI**: Analytics and reporting (gateway for on-prem data)
-- **Power Virtual Agents**: Chatbots (limited to internal use without additional assessment)
+**Implications**:
+- Communicate through published APIs or asynchronous events
+- No direct database access across system boundaries
+- Each system manages its own data lifecycle
+- Shared libraries kept minimal (favour duplication over coupling)
+- Avoid distributed transactions across systems
 
-**Power Platform Governance Requirements**:
-- Data Loss Prevention (DLP) policies block non-business connectors
-- Environment strategy (production, development, personal productivity)
-- Maker governance (approval workflow for production deployments)
-- CoE Starter Kit deployed for monitoring and compliance
-- Premium connector usage tracked and justified
+**Validation Gates**:
+- [ ] Systems communicate via APIs or events, not database
+- [ ] No shared mutable state
+- [ ] Each system has independent data store
+- [ ] Deployment of one system doesn't require deployment of another
+- [ ] Interface changes versioned with backward compatibility
 
-**Development and Integration**:
-- **APIs**: Microsoft Graph API (preferred), REST APIs with OAuth 2.0
-- **Custom Development**: SharePoint Framework (SPFx), Teams apps
-- **Languages**: TypeScript (preferred), JavaScript, PowerShell, C#
-- **Authentication**: Azure AD OAuth 2.0 / OpenID Connect (OIDC)
+---
 
-**Third-Party Integrations** (Require Assessment):
-- Pre-approved: GOV.UK services (Notify, Pay, PaaS)
-- Security assessment required for new SaaS integrations
-- Azure AD app registration for all integrated apps
-- Conditional Access policies applied to third-party apps
+### 10. Interoperability and Open Standards
 
-**Prohibited Technologies**:
-- Consumer OneDrive (personal accounts)
-- Non-UK M365 tenants
-- Unapproved file sharing services (Dropbox, Google Drive)
-- Shadow IT tools bypassing IT procurement
+**Principle Statement**:
+All systems MUST use open standards for data formats, APIs, and protocols to ensure interoperability, avoid vendor lock-in, and enable cross-government collaboration.
+
+**Rationale**:
+TCoP Point 4 requires open standards to ensure long-term sustainability, user choice, and cross-government integration. Cabinet Office must lead by example.
+
+**Compulsory Open Standards** (per Open Standards Board):
+- **Document formats**: ODF 1.2 (Open Document Format) for editable documents
+- **Email**: SMTP, IMAP (not proprietary connectors)
+- **Calendar**: iCalendar (RFC 5545)
+- **Contacts**: vCard (RFC 6350)
+- **Web browsing**: HTML5, CSS3
+- **APIs**: RESTful APIs with OpenAPI 3.0+ specifications
+- **Authentication**: OAuth 2.0, OpenID Connect (OIDC), SAML 2.0
+
+**Data Portability**:
+- Users can export data in open formats
+- No proprietary lock-in for citizen data
+- Migration paths to alternative solutions documented
+
+**Cross-Government Integration**:
+- GOV.UK Verify / One Login integration
+- Government Digital Identity (GDI) alignment
+- Cross-government APIs follow GDS API standards
+- Shared platforms (e.g., GOV.UK Notify, GOV.UK Pay) prioritised
 
 **Exceptions**:
-- Proof-of-concept in isolated environment (time-boxed, 90 days max)
-- Specialized use cases with CTO approval
-- Legacy tools during migration period (documented sunset date)
+- Specialised functionality where no open standard exists (document with rationale)
+- Legacy integrations during migration period (max 18 months with roadmap)
 
 **Validation Gates**:
-- [ ] All solutions use approved M365 services
-- [ ] Power Platform DLP policies enforced
-- [ ] Third-party integrations security assessed
-- [ ] Licensing compliance verified
+- [ ] Open standards compliance verified
+- [ ] Data export capability in open formats tested
+- [ ] API specifications published (OpenAPI 3.0+)
+- [ ] Cross-government interoperability tested where applicable
 
 ---
 
-### 10. Infrastructure as Code and DevOps
+### 11. Asynchronous Communication
 
 **Principle Statement**:
-ALL M365 configuration and infrastructure MUST be defined as code, version-controlled, and deployed via CI/CD pipelines. Manual configuration changes are prohibited in production.
+Systems SHOULD use asynchronous communication for non-real-time interactions to improve resilience and decoupling.
 
 **Rationale**:
-Infrastructure-as-Code ensures repeatability, auditability, change control, and disaster recovery capability. Manual changes introduce drift and risk.
+Asynchronous patterns reduce temporal coupling, improve fault tolerance, and enable better scalability.
 
-**IaC Standards for M365**:
-- **Primary Tools**: Microsoft365DSC (Desired State Configuration), Terraform with AzureRM provider
-- **Version Control**: Git (GitHub.com with private repos, or Azure DevOps)
-- **Configuration Baseline**: M365DSC export of current tenant configuration
-- **Change Management**: All changes via pull request with mandatory review
+**When to Use Async**:
+- Non-real-time business processes (order fulfilment, batch jobs)
+- Event notification and pub/sub patterns
+- Long-running operations that don't require immediate response
+- Integration with unreliable or slow external systems
 
-**M365 Configuration as Code**:
-- Azure AD (Entra ID): Conditional Access policies, groups, users
-- SharePoint Online: Site collections, hub sites, sharing policies
-- Exchange Online: Mail flow rules, retention policies, mailbox settings
-- Microsoft Teams: Team templates, policies, settings
-- Purview: Sensitivity labels, retention labels, DLP policies
-- Defender: Security policies, threat policies
-
-**CI/CD Pipeline Stages**:
-1. **Development**: Test tenant for validation
-2. **Code Review**: Peer review of configuration changes
-3. **Automated Testing**: M365DSC Test to validate drift detection
-4. **Approval Gate**: CAB (Change Advisory Board) approval for production changes
-5. **Production Deployment**: M365DSC Apply with audit logging
-6. **Validation**: Post-deployment drift detection
-7. **Rollback**: Revert to previous configuration version if issues detected
-
-**Change Control**:
-- Normal changes: 5-day CAB review
-- Standard changes: Pre-approved templates
-- Emergency changes: CTO/CISO approval with 24-hour retrospective documentation
-
-**Drift Detection**:
-- Daily M365DSC drift monitoring
-- Automated alerts on unauthorized manual changes
-- Quarterly compliance reports
-
-**Disaster Recovery**:
-- M365 configuration backed up daily via M365DSC export
-- Recovery procedures tested quarterly
-- Configuration history retained for 7 years
-
-**Exceptions**:
-- Emergency security hotfixes (with 24-hour IaC update requirement)
-- User-driven configuration (e.g., Teams channel creation) within governed boundaries
+**When Synchronous is Acceptable**:
+- Real-time user interactions requiring immediate feedback
+- Query operations (read-only, idempotent)
+- Transactions requiring immediate consistency
 
 **Validation Gates**:
-- [ ] M365 configuration exported to M365DSC
-- [ ] CI/CD pipeline configured with approval gates
-- [ ] Drift detection automated
-- [ ] Disaster recovery procedures tested
-- [ ] Change management integrated with ServiceNow/Jira
+- [ ] Async patterns used for non-real-time flows
+- [ ] Message durability and delivery guarantees defined
+- [ ] Event schemas versioned and published
+- [ ] Dead letter queues and error handling configured
 
 ---
 
-## IV. Architecture Patterns
+## IV. Quality Attributes
 
-### 11. Identity and Access Management (Zero Trust)
+### 12. Scalability and Elasticity
 
 **Principle Statement**:
-All access MUST be identity-based using Azure AD with Conditional Access policies enforcing device compliance, location, and risk-based controls. Network location is NOT a proxy for trust.
+All systems MUST be designed to scale horizontally to meet demand, with the ability to dynamically adjust capacity based on load.
 
 **Rationale**:
-Zero Trust assumes breach and verifies every access request explicitly. Traditional perimeter security is insufficient for cloud-first, mobile-enabled government.
+Business demand is unpredictable and variable. Systems must handle both growth and traffic spikes without manual intervention or architectural changes.
 
-**Azure AD (Entra ID) Architecture**:
-- **Single tenant**: Cabinet Office production tenant (no multi-tenancy)
-- **Hybrid identity**: Azure AD Connect for on-prem AD sync (if applicable)
-- **Identity Protection**: Risk-based policies for sign-in and user risk
-- **Privileged Identity Management (PIM)**: Just-in-time admin access
-- **Multi-factor authentication (MFA)**: Enforced for all users via Conditional Access
-
-**Conditional Access Policies** (Mandatory):
-1. **Require MFA for all users**: No exceptions
-2. **Block legacy authentication**: Modern auth only (OAuth 2.0)
-3. **Require compliant device**: Intune-managed devices only for OFFICIAL-SENSITIVE
-4. **Block access from unapproved locations**: Geofencing to UK + approved countries
-5. **Require approved client apps**: Microsoft apps or approved third-party apps
-6. **Session controls for high-risk users**: Require password change, limited session duration
-
-**MFA Methods** (Approved):
-- **Preferred**: Microsoft Authenticator (passwordless), FIDO2 security keys
-- **Allowed**: SMS/Phone (for users without smartphones - time-limited)
-- **Prohibited**: Voice call only (vulnerable to social engineering)
-
-**Passwordless Authentication**:
-- Roadmap to eliminate passwords for all users (18-month target)
-- Windows Hello for Business for device sign-in
-- Microsoft Authenticator for mobile access
-- FIDO2 keys for high-privilege accounts
-
-**Privileged Access Management**:
-- Global Admin role: Maximum 5 accounts, PIM activated only
-- Break-glass accounts: 2 accounts, stored in secure vault, no MFA (for AAD outage)
-- Admin roles: Least privilege assignment, PIM approval workflows
-- Admin workstations: Privileged Access Workstations (PAWs) or secure admin workstation
-
-**Device Management (Intune)**:
-- All devices accessing M365 must be Intune-managed OR Hybrid Azure AD joined
-- Device compliance policies: Encryption, firewall, antivirus, OS version
-- Conditional Access enforces device compliance
-- Mobile Application Management (MAM) for BYOD scenarios (where approved)
-
-**Guest Access Governance**:
-- External collaboration enabled with restrictions
-- Guest invitations require sponsor approval
-- Guests subject to same Conditional Access policies
-- Guest access reviews quarterly (Azure AD Access Reviews)
-- Time-limited guest accounts (max 12 months, renewal required)
+**Implications**:
+- Design for stateless components that can be replicated
+- Avoid hard-coded limits or fixed capacity assumptions
+- Plan for distributed deployment across multiple compute nodes
+- Use load balancing to distribute traffic across instances
+- Implement auto-scaling based on demand metrics
 
 **Validation Gates**:
-- [ ] Conditional Access policies configured and tested
-- [ ] MFA enrollment for 100% of users
-- [ ] PIM configured for admin roles
-- [ ] Device compliance policies enforced
-- [ ] Guest access review process operational
+- [ ] System can scale horizontally (add more instances)
+- [ ] No single points of failure that limit scaling
+- [ ] Load testing demonstrates capacity growth with added resources
+- [ ] Scaling metrics and triggers defined
+- [ ] Cost model accounts for variable capacity
 
 ---
 
-### 12. Information Governance and Records Management
+### 13. Resilience and Fault Tolerance
 
 **Principle Statement**:
-All M365 content MUST be governed by retention policies, sensitivity labels, and disposition schedules aligned with National Archives guidance and Public Records Act requirements.
+All systems MUST gracefully degrade when dependencies fail and recover automatically without data loss or manual intervention.
 
 **Rationale**:
-Cabinet Office has legal obligations under the Public Records Act 1958 and must ensure records are retained, accessible, and disposed of appropriately.
+Failures are inevitable in distributed systems. The architecture must assume failures will occur and design for resilience rather than perfect reliability.
 
-**Records Management Framework**:
-- **Records Authority**: National Archives guidance on retention schedules
-- **Retention Schedule**: Aligned with Cabinet Office retention and disposal schedule
-- **File Plan**: Document types mapped to retention periods
-- **Records Manager**: Appointed role with governance responsibility
-
-**Microsoft Purview Records Management**:
-- **Retention labels**: Applied manually or automatically based on rules
-- **Retention policies**: Apply retention to all content in scope
-- **Disposition reviews**: Workflow for records reaching end of retention
-- **Regulatory records**: Locked records preventing deletion
-- **Event-based retention**: Triggers (e.g., contract expiry, project closure)
-
-**Common Retention Periods** (Cabinet Office):
-- **Policy papers**: Permanent (transfer to National Archives after 20 years)
-- **Ministerial correspondence**: Permanent
-- **Financial records**: 7 years (post-transaction)
-- **HR records**: 6 years (post-employment)
-- **Transitory information**: Delete after 1 year or when no longer needed
-- **OFFICIAL emails**: 2 years (unless related to above categories)
-
-**Sensitivity Labels and Retention Integration**:
-- Sensitivity labels can auto-apply retention labels
-- OFFICIAL-SENSITIVE content: Minimum 7-year retention
-- Public Records Act: Transfer to National Archives at 20 years (policy papers)
-
-**eDiscovery and Legal Hold**:
-- eDiscovery cases for FOI requests, legal proceedings
-- Legal hold overrides retention policies
-- Content Search across Exchange, SharePoint, OneDrive, Teams
-- Export to PST/PDF for disclosure
-
-**Freedom of Information (FOI) Compliance**:
-- Content searchable for FOI requests
-- Response SLA: 20 working days
-- Exemptions documented and justified
-- Disclosure log maintained
+**Implications**:
+- Implement circuit breakers for external dependencies
+- Use timeouts on all network calls
+- Retry with exponential backoff for transient failures
+- Graceful degradation when non-critical services fail
+- Automated health checks and recovery
+- Avoid cascading failures through bulkhead isolation
 
 **Validation Gates**:
-- [ ] Retention labels published and auto-applied
-- [ ] Retention policies cover all M365 workloads
-- [ ] Disposition review workflow tested
-- [ ] eDiscovery permissions assigned
-- [ ] FOI response procedures documented
+- [ ] Failure modes identified and mitigated
+- [ ] Chaos engineering or fault injection testing performed
+- [ ] Recovery Time Objective (RTO) and Recovery Point Objective (RPO) defined
+- [ ] Automated failover tested
+- [ ] Degraded mode behaviour documented
 
 ---
 
-### 13. Collaboration and External Sharing Governance
+### 14. Performance and Efficiency
 
 **Principle Statement**:
-External collaboration is permitted with appropriate controls to prevent unauthorized data disclosure while enabling cross-government and partner collaboration.
+All systems MUST meet defined performance targets under expected load with efficient use of computational resources.
 
-**Rationale**:
-Cabinet Office must collaborate with other government departments, agencies, and trusted partners while protecting OFFICIAL information.
+**Performance Targets** (define for each system):
+- **Response Time**: p50, p95, p99 latency targets
+- **Throughput**: Requests per second, transactions per minute
+- **Concurrency**: Simultaneous user/request capacity
+- **Resource Efficiency**: CPU/memory utilisation targets
 
-**Sharing Principles**:
-- **Default to closed**: Sharing disabled unless explicitly enabled
-- **Need-to-know**: Share only with authorized recipients
-- **Least privilege**: Grant minimum necessary permissions
-- **Auditability**: All sharing logged and reviewable
-
-**SharePoint and OneDrive Sharing Policies**:
-- **Internal-only**: Default for all new sites
-- **External sharing**: Enabled only for approved sites (whitelisted domains)
-- **Anonymous links**: Disabled (authenticated sharing only)
-- **Expiration**: External links expire after 90 days
-- **Permissions**: View-only preferred, edit with justification
-
-**Approved External Domains** (Allowlist):
-- *.gov.uk (all UK Government departments)
-- *.nhs.uk (NHS organizations)
-- *.mod.uk (Ministry of Defence)
-- *.police.uk (Police forces)
-- Specific partner organizations (Cabinet Office approved list)
-
-**Microsoft Teams External Access**:
-- **External access (federation)**: Enabled for gov.uk domains only
-- **Guest access**: Enabled with approval workflow
-- **Private channels**: Restricted to internal members only
-- **Channel email**: Disabled (prevents uncontrolled email-to-Teams ingestion)
-
-**OneDrive for Business**:
-- Personal use permitted for work documents only
-- Syncing OFFICIAL-SENSITIVE requires encrypted device
-- External sharing disabled by default
-- Storage quota: 1TB per user (reviewable)
-
-**Teams Meetings with External Participants**:
-- Lobby enabled (guests admitted by organizer)
-- Recording requires notification and consent
-- Meeting recordings auto-deleted after 60 days (unless retained)
-- Transcripts reviewed for sensitive information before sharing
-
-**Monitoring and Compliance**:
-- Monthly reports on external sharing activity
-- Quarterly access reviews for external guest accounts
-- Alerts on unusual sharing patterns (e.g., bulk downloads by guests)
-- DLP policies block sharing of OFFICIAL-SENSITIVE externally
+**Implications**:
+- Performance requirements defined before implementation
+- Load testing performed before production deployment
+- Performance monitoring continuous, not just point-in-time
+- Optimise hot paths identified through profiling
+- Caching strategies for expensive operations
 
 **Validation Gates**:
-- [ ] Sharing policies configured per classification
-- [ ] Allowlist of external domains enforced
-- [ ] Guest access review workflow operational
-- [ ] External sharing audit reports generated monthly
+- [ ] Performance requirements defined with measurable targets
+- [ ] Load testing performed at expected capacity
+- [ ] Performance metrics monitored in production
+- [ ] Capacity planning model defined
 
 ---
 
-## V. Development and Customization
-
-### 14. SharePoint Framework (SPFx) and Custom Development
+### 15. Availability and Reliability
 
 **Principle Statement**:
-Custom M365 development MUST use approved frameworks (SharePoint Framework, Teams apps) with security reviews and code quality standards.
+All systems MUST meet defined availability targets with automated recovery and minimal data loss.
 
-**Rationale**:
-Custom code introduces security and supportability risks. Standardized frameworks with governance ensure secure, maintainable solutions.
+**Availability Targets** (define for each system):
+- **Uptime SLA**: e.g., 99.9% (43.8 min downtime/month), 99.95%, 99.99%
+- **Recovery Time Objective (RTO)**: Maximum acceptable downtime
+- **Recovery Point Objective (RPO)**: Maximum acceptable data loss
 
-**Approved Development Frameworks**:
-- **SharePoint Online**: SharePoint Framework (SPFx) web parts, extensions
-- **Microsoft Teams**: Teams apps (tabs, bots, messaging extensions)
-- **Power Platform**: Power Apps, Power Automate (with governance)
-- **Microsoft Graph**: APIs for data access
-- **Azure Functions**: Serverless backend for integrations
-
-**SPFx Development Standards**:
-- TypeScript (not JavaScript) for type safety
-- React (preferred framework)
-- SPFx version: Latest GA version within 6 months of release
-- Yeoman generator for project scaffolding
-- npm packages: Only approved, security-scanned packages
-
-**Security Requirements for Custom Code**:
-- **Code review**: Peer review mandatory before deployment
-- **Static analysis**: SonarQube, ESLint, TypeScript compiler strict mode
-- **Dependency scanning**: npm audit, Dependabot alerts
-- **No secrets in code**: Use Azure Key Vault for API keys
-- **Authentication**: Azure AD OAuth 2.0 (no basic auth)
-- **API permissions**: Least privilege Graph API permissions
-
-**Teams App Development**:
-- Teams Toolkit for Visual Studio Code
-- App manifest validated against schema
-- App submission to internal App Catalog (not public store)
-- Permissions reviewed by security team
-- Bots hosted in Azure Bot Service (UK region)
-
-**Power Platform Development**:
-- Solution-aware development (not unmanaged customizations)
-- ALM (Application Lifecycle Management) with environments (dev, test, prod)
-- Connectors: Only approved connectors (DLP enforced)
-- Code components (PCF): Reviewed and approved
-- Power Apps security roles: Least privilege
-
-**Testing Requirements**:
-- Unit tests: Jest for SPFx, PAC CLI for Power Apps
-- Integration tests: Test tenant validation
-- User acceptance testing: Business user sign-off
-- Accessibility testing: Pa11y, Axe for WCAG compliance
-- Performance testing: Load testing for high-traffic solutions
-
-**Deployment Process**:
-- Development: Test tenant
-- User Acceptance Testing (UAT): Pre-production tenant
-- Production: Scheduled deployment with rollback plan
-- Monitoring: Application Insights telemetry
+**High Availability Patterns**:
+- Redundancy across availability zones / data centres
+- Automated health checks and failover
+- Active-active or active-passive configurations
+- Regular disaster recovery testing
 
 **Validation Gates**:
-- [ ] Code review completed and approved
-- [ ] Security scan passed (no high/critical vulnerabilities)
-- [ ] Accessibility testing passed (WCAG 2.2 AA)
-- [ ] CAB approval for production deployment
-- [ ] Rollback procedure documented
+- [ ] Availability SLA defined
+- [ ] RTO and RPO requirements documented
+- [ ] Redundancy strategy implemented
+- [ ] Failover tested regularly
+- [ ] Backup and restore procedures validated
 
 ---
 
-### 15. Power Platform Governance and Center of Excellence
+### 16. Maintainability and Evolvability
 
 **Principle Statement**:
-Power Platform solutions MUST be governed through a Center of Excellence with DLP policies, environment strategy, and maker governance to prevent shadow IT while enabling citizen development.
+All systems MUST be designed for change, with clear separation of concerns, modular architecture, and comprehensive documentation.
 
 **Rationale**:
-Power Platform democratizes development but requires governance to prevent data leakage, licensing violations, and unsupportable solutions.
+Software spends most of its lifetime in maintenance. Design decisions should optimise for understandability and modifiability.
 
-**Power Platform Center of Excellence (CoE)**:
-- **CoE Starter Kit**: Deployed for monitoring and governance
-- **CoE Team**: Power Platform admins, business analysts, governance lead
-- **Maker Community**: Internal community of practice, training, best practices
-- **App Review Board**: Governance board for production app approvals
-
-**Environment Strategy**:
-1. **Default environment**: Disabled (prevent ungoverned development)
-2. **Personal productivity environments**: Auto-created for makers (isolated, DLP enforced)
-3. **Development environments**: Requested via service catalog
-4. **Test/UAT environments**: Managed environments for testing
-5. **Production environments**: Restricted, requires approval
-
-**Data Loss Prevention (DLP) Policies**:
-- **Business data only**: Microsoft connectors (SharePoint, Outlook, Teams)
-- **Non-business data**: Blocked (Twitter, personal email, Dropbox)
-- **Approved connectors**: Specific connectors with security review (HTTP, SQL Server with governance)
-
-**Maker Governance**:
-- Maker registration: Makers identify themselves, agree to governance
-- App quarantine: Apps in default environment auto-quarantined
-- App assessment: Pre-production checklist (security, accessibility, licensing)
-- App retirement: Unused apps archived after 6 months
-
-**Licensing Governance**:
-- Per-app plans for production apps (not per-user unless justified)
-- Premium connector usage tracked and optimized
-- Power Automate RPA: Unattended licenses audited quarterly
-
-**CoE Dashboard**:
-- App and flow inventory
-- Connector usage analytics
-- Orphaned resources (creator left organization)
-- Compliance status
+**Implications**:
+- Modular architecture with clear boundaries
+- Separation of concerns (business logic, data access, presentation)
+- Code is self-documenting with meaningful names
+- Architecture Decision Records (ADRs) for significant choices
+- Automated testing to enable confident refactoring
 
 **Validation Gates**:
-- [ ] CoE Starter Kit deployed
-- [ ] DLP policies enforced on all environments
-- [ ] App review process operational
-- [ ] Maker training program established
+- [ ] Architecture documentation exists and is current
+- [ ] Module boundaries clear with defined responsibilities
+- [ ] Automated test coverage enables safe refactoring
+- [ ] Architecture Decision Records (ADRs) document key choices
 
 ---
 
-## VI. Operational Excellence
+## V. Development Practices
 
-### 16. Observability, Monitoring, and Incident Response
+### 17. Infrastructure as Code
 
 **Principle Statement**:
-M365 services MUST be monitored for availability, performance, security threats, and compliance with SLAs. Incidents MUST be responded to using NCSC Cyber Incident Response guidance.
+All infrastructure MUST be defined as code, version-controlled, and deployed through automated pipelines.
 
 **Rationale**:
-Proactive monitoring enables rapid detection and response to service degradation, security incidents, and compliance violations.
+Manual infrastructure changes create drift, inconsistency, and undocumented state. Infrastructure as Code (IaC) enables repeatability, auditability, and disaster recovery.
 
-**M365 Monitoring Tools**:
-- **Microsoft 365 Admin Center**: Service health dashboard, message center
-- **Microsoft 365 Defender**: Security incidents, threat analytics
-- **Microsoft Purview Compliance**: Compliance score, alerts
-- **Azure AD (Entra ID) Monitoring**: Sign-in logs, audit logs, risky users
-- **Microsoft Sentinel**: SIEM for advanced threat detection (if deployed)
-- **Power BI**: Custom dashboards for usage analytics
-
-**Key Metrics and SLIs**:
-- **Availability**: Service uptime (Exchange, SharePoint, Teams)
-- **Performance**: Response time, latency
-- **Security**: Sign-in failures, MFA denials, DLP policy violations
-- **Compliance**: Unlabeled documents, retention policy gaps
-- **Adoption**: Active users, Teams usage, SharePoint collaboration
-
-**Alerting and Notifications**:
-- **Critical alerts**: Service outage, security breach, DLP violations
-- **Warning alerts**: Capacity thresholds, guest account expiry
-- **Informational**: Planned maintenance, new features
-- **Escalation**: On-call rotation, PagerDuty/ServiceNow integration
-
-**Service Level Agreements (SLAs)**:
-- **Microsoft SLA**: 99.9% uptime for M365 services
-- **Internal SLA (Cabinet Office)**: Response and resolution times
-  - P1 (Critical): 1-hour response, 4-hour resolution target
-  - P2 (High): 4-hour response, 24-hour resolution target
-  - P3 (Medium): 1 business day response, 5 business days resolution
-  - P4 (Low): 2 business days response, 10 business days resolution
-
-**Incident Response Process** (NCSC Aligned):
-1. **Detection**: Alert triggered or user report
-2. **Triage**: Severity assessment, initial containment
-3. **Investigation**: Root cause analysis, scope determination
-4. **Containment**: Isolate affected systems, prevent spread
-5. **Eradication**: Remove threat, patch vulnerabilities
-6. **Recovery**: Restore services, validate functionality
-7. **Post-Incident Review**: Lessons learned, remediation actions
-
-**Security Incident Categories**:
-- **Account compromise**: Credentials stolen, unauthorized access
-- **Malware/Phishing**: Malicious attachments, phishing emails
-- **Data breach**: Unauthorized disclosure of OFFICIAL data
-- **Insider threat**: Malicious or negligent insider actions
-- **Denial of service**: Service unavailable due to attack or misconfiguration
-
-**Regulatory Reporting**:
-- **Data breaches**: Report to ICO within 72 hours (GDPR requirement)
-- **Serious incidents**: Report to SIRO, CTO, DPO within 24 hours
-- **NCSC**: Report significant cyber incidents to NCSC via Cyber Incident Response service
-
-**Disaster Recovery and Business Continuity**:
-- **Microsoft BC/DR**: Microsoft's multi-region resilience
-- **Cabinet Office BC/DR**: Failover procedures, alternate work modes
-- **Recovery Time Objective (RTO)**: 4 hours for critical services
-- **Recovery Point Objective (RPO)**: 1 hour (maximum acceptable data loss)
-- **Testing**: Annual DR exercise, tabletop exercises quarterly
+**Implications**:
+- All infrastructure defined in declarative code
+- Infrastructure changes go through code review
+- Environments are reproducible from code
+- No manual changes to production infrastructure
+- Infrastructure versioned alongside application code
 
 **Validation Gates**:
-- [ ] Monitoring dashboards configured
-- [ ] Alerting rules defined with on-call rotation
-- [ ] Incident response playbooks documented
-- [ ] SLA tracking automated
-- [ ] DR procedures tested annually
+- [ ] Infrastructure defined as code
+- [ ] Infrastructure code version-controlled
+- [ ] Automated deployment pipeline for infrastructure
+- [ ] No manual infrastructure changes in production
 
 ---
 
-### 17. User Adoption and Change Management
+### 18. Automated Testing
 
 **Principle Statement**:
-M365 deployment success depends on user adoption. Change management, training, and support MUST be proactive, user-centered, and measurable.
+All code changes MUST be validated through automated testing before deployment to production.
 
-**Rationale**:
-Technology deployment fails without user adoption. Cabinet Office must ensure staff are equipped, trained, and supported to work effectively with M365.
+**Test Pyramid**:
+- **Unit Tests**: Fast, isolated, high coverage (70-80% of tests)
+- **Integration Tests**: Test component interactions (15-20% of tests)
+- **End-to-End Tests**: Critical user journeys (5-10% of tests)
 
-**Change Management Framework**:
-- **ADKAR Model**: Awareness, Desire, Knowledge, Ability, Reinforcement
-- **Stakeholder engagement**: Early and continuous involvement
-- **Communication plan**: Multi-channel, tailored by audience
-- **Resistance management**: Identify and address concerns
-
-**Communication Channels**:
-- **Intranet**: M365 adoption hub, FAQs, news
-- **Email campaigns**: Phased announcements, tips and tricks
-- **Yammer/Teams**: Community-led discussions, champions network
-- **Town halls**: Leadership messages, Q&A sessions
-- **Posters and digital signage**: Visual reminders, key messages
-
-**Training Strategy**:
-- **Role-based training**: Tailored to job functions (executive, administrator, knowledge worker)
-- **Format diversity**: eLearning, instructor-led, quick reference guides, video tutorials
-- **Just-in-time learning**: Contextual help, tooltips, chatbots
-- **Hands-on practice**: Sandbox environment for safe experimentation
-- **Accessibility training**: How to create accessible content
-
-**User Support Model**:
-- **Service desk**: Tier 1 support for basic M365 queries
-- **M365 champions network**: Peer support, super users in each department
-- **Self-service portal**: Knowledge base, how-to guides, troubleshooting
-- **Office hours**: Drop-in sessions with M365 experts
-
-**Adoption Metrics**:
-- **Active users**: Daily/monthly active users (DAU/MAU)
-- **Feature usage**: Teams adoption, SharePoint collaboration, OneDrive migration
-- **Training completion**: % of users trained
-- **Support tickets**: Volume and trends (declining indicates adoption success)
-- **User satisfaction**: Surveys, Net Promoter Score (NPS)
-
-**Champions Network**:
-- **M365 Champions**: Enthusiastic early adopters in each directorate
-- **Responsibilities**: Peer support, feedback to IT, evangelism
-- **Benefits**: Early access to features, direct line to product team
-- **Recognition**: Certificates, badges, leadership visibility
-
-**Feedback Loops**:
-- **User surveys**: Quarterly pulse surveys
-- **Focus groups**: Targeted sessions for specific scenarios
-- **Usage analytics**: Microsoft 365 usage reports, adoption dashboard
-- **Continuous improvement**: Iterative refinement based on feedback
+**Required Test Types**:
+- Functional tests (does it work?)
+- Performance tests (is it fast enough?)
+- Security tests (is it secure?)
+- Resilience tests (does it handle failures?)
 
 **Validation Gates**:
-- [ ] Change management plan documented and approved
-- [ ] Training materials created and accessible
-- [ ] Champions network established
-- [ ] Support model operational
-- [ ] Adoption metrics dashboard published
+- [ ] Automated tests exist and pass before merge
+- [ ] Test coverage meets defined thresholds
+- [ ] Critical paths have end-to-end tests
+- [ ] Performance tests run regularly
 
 ---
 
-## VII. Cost and Financial Governance
-
-### 18. FinOps and License Optimization
+### 19. Continuous Integration and Deployment
 
 **Principle Statement**:
-M365 licensing and costs MUST be transparent, optimized, and aligned with user needs. License waste and over-provisioning are unacceptable uses of public funds.
+All code changes MUST go through automated build, test, and deployment pipelines with quality gates at each stage.
 
-**Rationale**:
-Cabinet Office has a fiduciary duty to taxpayers to optimize technology spending. M365 licensing is complex and requires active management to avoid waste.
+**Pipeline Stages**:
+1. **Source Control**: All changes committed to version control
+2. **Build**: Automated compilation and packaging
+3. **Test**: Automated test execution
+4. **Security Scan**: Dependency and code vulnerability scanning
+5. **Deployment**: Automated deployment to environments
 
-**License Governance**:
-- **License assignment**: Only assign licenses to active users
-- **License types**: Match license to user role (E3 vs E5 vs F3)
-- **License reclamation**: Reclaim licenses from inactive users (automated)
-- **License pooling**: Shared mailboxes, resource accounts (no license required)
-
-**M365 License Tiers** (Cabinet Office Standard):
-- **M365 E5**: Executives, senior civil servants, security/compliance roles (advanced security, analytics)
-- **M365 E3**: Standard knowledge workers (core productivity, basic security)
-- **M365 F3**: Frontline workers (limited requirements, mobile-first)
-- **Add-ons**: Specific features (e.g., Power BI Pro, Visio) on exception basis
-
-**Cost Optimization Strategies**:
-- **Right-sizing**: E5 licenses only for users needing advanced features (e.g., Defender for Endpoint, Power BI Premium)
-- **Inactive user cleanup**: Offboard users within 7 days of departure
-- **Shared devices**: Shared Computer Activation for shared workstations
-- **Guest access**: Use guest accounts (free) instead of full licenses
-- **Power Platform**: Per-app plans instead of per-user where possible
-
-**License Compliance**:
-- Monthly license reconciliation
-- Audit trail for license assignments
-- True-up process for annual Microsoft contract renewal
-- Compliance with Microsoft Product Terms and Online Services Terms
-
-**Cost Tracking and Reporting**:
-- Monthly cost reports by directorate
-- Cost allocation to budget holders
-- Variance analysis: Actual vs. budget
-- Forecasting: Projected costs for new initiatives
-
-**Budget Controls**:
-- Budget allocated per directorate
-- Approval workflow for license requests exceeding allocation
-- Quarterly reviews with finance business partners
-- Cost avoidance metrics (e.g., reduced on-prem infrastructure costs)
-
-**Third-Party Tools** (Optional):
-- CoreView, Quest On Demand, Veeam for M365 management and optimization
-- Licensing optimization tools for recommendations
+**Quality Gates**:
+- All tests must pass
+- No critical security vulnerabilities
+- Code review approval required
+- Deployment requires production readiness checklist
 
 **Validation Gates**:
-- [ ] License assignment policy enforced
-- [ ] Inactive user cleanup automated
-- [ ] Monthly cost reports published
-- [ ] Quarterly license optimization review completed
-- [ ] Budget tracking integrated with finance systems
+- [ ] Automated CI/CD pipeline exists
+- [ ] Pipeline includes security scanning
+- [ ] Deployment is automated and repeatable
+- [ ] Rollback capability tested
 
 ---
 
-## VIII. Compliance and Audit
+## VI. Exception Process
 
-### 19. Audit Logging and eDiscovery
+### Requesting Architecture Exceptions
 
-**Principle Statement**:
-All privileged operations, data access, and administrative actions MUST be logged immutably for compliance, audit, and forensic analysis with 7-year retention for OFFICIAL records.
+Principles are mandatory unless a documented exception is approved by the Enterprise Architecture Review Board.
 
-**Rationale**:
-Government Security Classifications Policy and Public Records Act require comprehensive audit trails. M365 audit logs are essential for accountability and incident investigation.
+**Valid Exception Reasons**:
+- Technical constraints that prevent compliance
+- Regulatory or legal requirements
+- Transitional state during migration
+- Pilot/proof-of-concept with defined end date
 
-**M365 Unified Audit Log**:
-- **Unified Audit Log (UAL)**: Enabled for all users and workloads
-- **Coverage**: Exchange, SharePoint, OneDrive, Teams, Azure AD, Power Platform
-- **Retention**: 7 years (OFFICIAL requirement) via long-term retention policies
-- **Search**: PowerShell, Purview Compliance portal, SIEM integration
-
-**Audit Log Categories**:
-- **User activities**: File access, sharing, downloads, searches
-- **Admin activities**: Configuration changes, permission grants, user creation
-- **Security events**: Sign-ins, MFA, Conditional Access policy triggers
-- **Compliance events**: DLP policy matches, retention label application, eDiscovery holds
-
-**Critical Events to Monitor**:
-- Global Admin role assignment
-- Conditional Access policy modification
-- DLP policy changes
-- Sensitivity label changes
-- External sharing of OFFICIAL-SENSITIVE content
-- Mass downloads or deletions
-- Guest account creation
-
-**Audit Log Retention Policies**:
-- **OFFICIAL records**: 7 years minimum (extendable to 10 years for E5)
-- **OFFICIAL-SENSITIVE**: 10 years
-- **Privileged operations**: 10 years
-- **Temporary/transitory**: 1 year
-
-**SIEM Integration** (Recommended):
-- Microsoft Sentinel or third-party SIEM (Splunk, QRadar)
-- Real-time ingestion of M365 audit logs
-- Correlation rules for threat detection
-- Automated alerting for suspicious activity
-- Compliance dashboards
-
-**eDiscovery Capabilities**:
-- **Content Search**: Basic keyword search across all M365 content
-- **eDiscovery (Standard)**: Case management, holds, exports
-- **eDiscovery (Premium)**: Advanced analytics, threading, near-duplicate detection
-- **Use cases**: FOI requests, employment tribunals, litigation, investigations
-
-**eDiscovery Permissions**:
-- **eDiscovery Manager**: Create and manage cases
-- **eDiscovery Administrator**: Access all cases, assign permissions
-- **Compliance Administrator**: View-only access for compliance reporting
-- **Role-based access**: Segregation of duties (creator cannot be reviewer)
-
-**Legal Hold and Preservation**:
-- Litigation holds override retention policies
-- In-place preservation for user mailboxes and sites
-- Hold notifications to custodians
-- Audit trail of hold activities
-
-**Validation Gates**:
-- [ ] Unified Audit Log enabled for all users
-- [ ] 7-year retention configured
-- [ ] SIEM integration tested
-- [ ] eDiscovery permissions assigned
-- [ ] Quarterly audit log reviews conducted
-
----
-
-### 20. Compliance Score and Continuous Assessment
-
-**Principle Statement**:
-M365 configuration MUST be continuously assessed against Microsoft Purview Compliance Score and UK Government security baselines with quarterly compliance reviews.
-
-**Rationale**:
-Compliance is not a one-time activity but a continuous process. Compliance Score provides measurable, actionable recommendations.
-
-**Microsoft Purview Compliance Score**:
-- **Baseline score**: Initial assessment upon deployment
-- **Target score**: 80%+ (Cabinet Office standard)
-- **Improvement actions**: Prioritized recommendations
-- **Score tracking**: Monthly trend analysis
-
-**Compliance Frameworks Assessed**:
-- **NCSC Cloud Security Principles**: 14 principles mapped to M365 controls
-- **Cyber Essentials Plus**: Technical controls for cyber hygiene
-- **ISO 27001**: Information security management
-- **GDPR / UK Data Protection Act 2018**: Data protection controls
-- **NIST Cybersecurity Framework**: Identify, Protect, Detect, Respond, Recover
-
-**Compliance Posture Management**:
-- **Automated assessment**: Daily compliance score updates
-- **Policy enforcement**: Technical controls (not just documentation)
-- **Remediation tracking**: Action owners, due dates, status
-- **Evidence collection**: Automated evidence for auditors
-
-**Quarterly Compliance Reviews**:
-- **Stakeholders**: SIRO, IAO, Compliance Manager, IT Security
-- **Review scope**: Compliance score changes, new risks, remediation progress
-- **Outputs**: Action plan for next quarter, escalations for non-compliance
-
-**External Audits**:
-- **Annual IT Health Check**: NCSC-approved CHECK scheme assessments
-- **Annual ISO 27001 audit**: External certification body
-- **Internal audit**: Cabinet Office Internal Audit team
-- **Microsoft compliance certifications**: ISO, SOC 2, FedRAMP (validated annually)
-
-**Regulatory Inspections**:
-- **ICO audits**: Data protection compliance
-- **National Audit Office (NAO)**: Value for money, controls
-- **Government Internal Audit Agency (GIAA)**: Governance and risk
-
-**Continuous Improvement Cycle**:
-1. **Assess**: Measure compliance score and control effectiveness
-2. **Plan**: Identify improvement actions, prioritize by risk
-3. **Implement**: Execute remediation actions
-4. **Verify**: Test controls, validate compliance
-5. **Report**: Update stakeholders, document evidence
-
-**Validation Gates**:
-- [ ] Compliance score baselined and tracked
-- [ ] Improvement actions assigned with owners
-- [ ] Quarterly compliance review scheduled
-- [ ] External audit schedule confirmed
-- [ ] Evidence repository maintained
-
----
-
-## IX. Exception Process
-
-### Exception Request Procedure
-
-Exceptions to these principles require documented justification and formal approval. Exceptions are granted reluctantly and time-limited.
-
-**Exception Request Must Include**:
-1. **Principle Being Violated**: Specific principle number and description
-2. **Business Justification**: Why exception is necessary (not merely convenient)
-3. **Risk Assessment**: Security, operational, compliance, reputational risks
-4. **Compensating Controls**: How risks will be mitigated (must be equivalent)
-5. **Time Limit**: Exception expiration date (maximum 12 months, preference for 6 months)
-6. **Remediation Plan**: Specific actions and timeline to achieve compliance
-7. **Cost/Benefit Analysis**: Cost of exception vs. cost of compliance
+**Exception Request Requirements**:
+- [ ] Justification with business/technical rationale
+- [ ] Alternative approach and compensating controls
+- [ ] Risk assessment and mitigation plan
+- [ ] Expiration date (exceptions are time-bound)
+- [ ] Remediation plan to achieve compliance
 
 **Approval Authority**:
 
@@ -1221,15 +733,9 @@ Exceptions to these principles require documented justification and formal appro
 - **Legacy system**: Existing system with sunset date (<12 months)
 
 **Exception Registry**:
-- All approved exceptions tracked in central registry (SharePoint list or Jira)
-- Fields: Exception ID, principle violated, requestor, approver, approval date, expiry date, status
+- All approved exceptions tracked in central registry
 - Quarterly reviews: Re-assess necessity, extend or revoke
 - Annual exception audit: Identify patterns, update principles if systemic exceptions
-
-**Exception Monitoring**:
-- Automated reminders 30 days before expiry
-- Escalation if extension requested without remediation progress
-- Reporting: Exception summary in quarterly ARB report
 
 **Automatic Exception Denial Criteria**:
 - Violates legal/regulatory requirement (GDPR, Public Records Act, Government Security Policy)
@@ -1246,228 +752,121 @@ Exceptions to these principles require documented justification and formal appro
 
 ---
 
-## X. Governance and Enforcement
+## VII. Governance and Compliance
 
-### Architecture Review Process
+### Architecture Review Gates
 
-All M365 projects and initiatives MUST undergo architecture review at defined gates to ensure compliance with these principles.
+All projects must pass architecture reviews at key milestones:
 
-**Review Gates**:
+**Discovery/Alpha**:
+- [ ] Architecture principles understood
+- [ ] High-level approach aligns with principles
+- [ ] No obvious principle violations
 
-**Gate 1: Initiation (Business Case)**
-- **Trigger**: New M365 initiative, significant configuration change
-- **Review**: Alignment with principles, feasibility, cost estimate
-- **Reviewers**: Enterprise Architect + Business Relationship Manager
-- **Outcome**: Approved to proceed to requirements / Rejected / More information required
+**Beta/Design**:
+- [ ] Detailed architecture documented
+- [ ] Compliance with each principle validated
+- [ ] Exceptions requested and approved
+- [ ] Security and data principles validated
 
-**Gate 2: Requirements Complete**
-- **Trigger**: Requirements documented
-- **Review**: Requirements comply with architecture principles (security, accessibility, data classification)
-- **Reviewers**: Domain Architect + Information Assurance Officer (IAO)
-- **Outcome**: Proceed to design / Revise requirements
+**Pre-Production**:
+- [ ] Implementation matches approved architecture
+- [ ] All validation gates passed
+- [ ] Operational readiness verified
 
-**Gate 3: Solution Design**
-- **Trigger**: High-level design documented
-- **Review**: Technology choices, integration patterns, security controls, data flows
-- **Reviewers**: Enterprise Architect + CISO representative + Compliance Manager
-- **Outcome**: Approved / Approved with conditions / Rejected
+### Enforcement
 
-**Gate 4: Pre-Production**
-- **Trigger**: Solution ready for UAT deployment
-- **Review**: Testing completion, configuration as code, monitoring, runbooks, training materials
-- **Reviewers**: Service Delivery Manager + Security Operations
-- **Outcome**: Approved for UAT / Additional controls required
-
-**Gate 5: Production Release**
-- **Trigger**: UAT successful, ready for production
-- **Review**: Change Advisory Board (CAB) approval, rollback plan, comms plan
-- **Reviewers**: CAB (Change Manager, Service Owner, IT Operations)
-- **Outcome**: Approved for production / Delayed / Rejected
-
-**Gate 6: Post-Implementation Review (PIR)**
-- **Trigger**: 90 days post-production release
-- **Review**: Lessons learned, benefits realized, adoption metrics, incident trends
-- **Reviewers**: Project team + Enterprise Architect + Business Owner
-- **Outcome**: Formal project closure / Remediation actions
-
-**Architecture Review Board (ARB)**:
-- **Membership**: CTO (chair), Enterprise Architect, CISO, IAO, Compliance Manager, Domain Architects
-- **Frequency**: Monthly (on-demand for urgent reviews)
-- **Quorum**: Minimum 3 members including CTO or delegate
-- **Decisions**: Recorded in ARB decision log, published to architecture community
-
-**Review Outcomes**:
-- **APPROVED**: Proceed to next phase immediately
-- **APPROVED WITH CONDITIONS**: Minor issues, must address before next gate
-- **DEFERRED**: Insufficient information, resubmit when ready
-- **REJECTED**: Major concerns, fundamental redesign required
-
-### Compliance Monitoring and Enforcement
-
-**Automated Compliance Scanning**:
-- **Microsoft Secure Score**: Daily automated assessment
-- **Compliance Score**: Daily updates with improvement actions
-- **Azure Policy / Policy as Code**: Continuous compliance checks
-- **M365DSC Drift Detection**: Daily configuration drift monitoring
-- **Third-party tools**: Qualys, Tenable for vulnerability scanning
-
-**Manual Compliance Reviews**:
-- **Quarterly**: Access reviews, exception registry review, compliance score review
-- **Annual**: Architecture principles review, comprehensive audit
-
-**Non-Compliance Escalation**:
-1. **Detection**: Automated alert or audit finding
-2. **Notification**: Service owner notified, 14 days to remediate
-3. **Escalation (Day 15)**: CTO notified, remediation plan required
-4. **Escalation (Day 30)**: ARB review, potential service suspension
-5. **Enforcement (Day 45)**: Service disabled if non-compliance creates unacceptable risk
-
-**Consequences for Non-Compliance**:
-- **Low risk**: Warning, remediation deadline
-- **Medium risk**: Escalation to senior management, project hold
-- **High risk**: Service suspension, disciplinary action (for willful violations)
+- Architecture reviews are **mandatory** for all projects
+- Principle violations must be remediated before production deployment
+- Approved exceptions are time-bound and reviewed quarterly
+- Retrospective reviews for compliance on live systems
 
 ---
 
-## XI. Amendment Process
+## VIII. Appendix
 
-### Modifying Principles
+### Principle Summary Checklist
 
-These principles are living documents and will be reviewed annually or when significant changes to M365, government policy, or threat landscape occur.
+| # | Principle | Category | Criticality | Validation |
+|---|-----------|----------|-------------|------------|
+| 1 | Cloud-First UK Sovereignty | Strategic | HIGH | Data residency attestation |
+| 2 | GDS Standard Compliance | Strategic | HIGH | Service assessment |
+| 3 | Security by Design | Strategic | CRITICAL | Threat model, pen testing |
+| 4 | Accessibility (WCAG 2.2 AA) | Strategic | CRITICAL | Accessibility audit |
+| 5 | Observability | Strategic | HIGH | Metrics, logs, traces |
+| 6 | Data Sovereignty | Data | CRITICAL | Compliance audit |
+| 7 | Data Quality & Lineage | Data | MEDIUM | Quality metrics |
+| 8 | Single Source of Truth | Data | HIGH | Data lineage |
+| 9 | Loose Coupling | Integration | HIGH | Deployment independence |
+| 10 | Open Standards | Integration | HIGH | Standards compliance |
+| 11 | Asynchronous Communication | Integration | MEDIUM | Async patterns used |
+| 12 | Scalability | Quality | HIGH | Load testing |
+| 13 | Resilience | Quality | CRITICAL | Chaos testing, RTO/RPO |
+| 14 | Performance | Quality | HIGH | Load testing |
+| 15 | Availability | Quality | CRITICAL | SLA monitoring |
+| 16 | Maintainability | Quality | MEDIUM | Documentation, tests |
+| 17 | Infrastructure as Code | DevOps | HIGH | IaC coverage |
+| 18 | Automated Testing | DevOps | HIGH | Test coverage |
+| 19 | CI/CD | DevOps | HIGH | Pipeline exists |
 
-**Amendment Proposal Requirements**:
-1. **Problem Statement**: Why current principle is inadequate
-2. **Proposed Change**: Specific wording amendments
-3. **Impact Analysis**: Affected systems, projects, costs
-4. **Industry Benchmark**: How other government departments or comparable organizations address this
-5. **Stakeholder Consultation**: Input from affected parties
-6. **Migration Plan**: For existing non-compliant systems
+### NCSC Cloud Security Principles Mapping
 
-**Approval Process**:
-1. **Proposal Submission**: To Enterprise Architecture Team via email/service request
-2. **Initial Review**: Enterprise Architect assesses completeness (5 business days)
-3. **Stakeholder Consultation**: 2-week feedback period (architecture community, security, compliance)
-4. **ARB Review**: Architecture Review Board discusses and votes
-5. **CTO Approval**: Final sign-off by CTO/CIO
-6. **Communication**: Email to all IT staff, intranet announcement, architecture community briefing
-7. **Grace Period**: 90 days for existing systems to achieve compliance (extendable to 180 days with approval)
+| NCSC Principle | Architecture Principle | Validation |
+|----------------|------------------------|------------|
+| 1. Data in transit protection | 3. Security by Design | TLS 1.3 enforcement |
+| 2. Asset protection and resilience | 1. Cloud-First UK Sovereignty | UK region redundancy |
+| 3. Separation between users | 6. Data Sovereignty | Sensitivity labels |
+| 4. Governance framework | VII. Governance | SIRO/IAO appointed |
+| 5. Operational security | 5. Observability | Patching, monitoring |
+| 6. Personnel security | 3. Security by Design | BPSS clearance |
+| 7. Secure development | 19. CI/CD | DevSecOps pipeline |
+| 8. Supply chain security | 3. Security by Design | Vendor assessments |
+| 9. Secure user management | 3. Security by Design | MFA mandatory |
+| 10. Identity and authentication | 3. Security by Design | Conditional Access |
+| 11. External interface protection | 6. Data Sovereignty | DLP policies |
+| 12. Secure service administration | 3. Security by Design | PIM for admins |
+| 13. Audit information | 5. Observability | 7-year log retention |
+| 14. Secure use of service | 3. Security by Design | Security training |
 
-**Versioning**:
-- Major version (e.g., 1.0 → 2.0): Significant changes requiring re-approval
-- Minor version (e.g., 1.1 → 1.2): Clarifications, non-substantive updates
-- Version history maintained in document control table
+### Technology Code of Practice Mapping
 
-**Annual Review Cycle**:
-- **Q4 each year**: Scheduled principles review
-- **Inputs**: Exception trends, audit findings, new threats, Microsoft roadmap, government policy changes
-- **Outputs**: Updated principles document, communication plan, training updates
+| TCoP Point | Architecture Principle | Status |
+|------------|------------------------|--------|
+| 1. Define user needs | 2. GDS Standard Compliance | Mandatory |
+| 2. Make things accessible | 4. Accessibility (WCAG 2.2 AA) | Mandatory |
+| 3. Use cloud first | 1. Cloud-First UK Sovereignty | Mandatory |
+| 4. Make use of open standards | 10. Interoperability & Open Standards | Mandatory |
+| 5. Use open source | 10. Interoperability & Open Standards | Mandatory |
+| 6. Make things secure | 3. Security by Design | Non-Negotiable |
+| 7. Make privacy integral | 6. Data Sovereignty | Mandatory |
+| 8. Share, reuse and collaborate | 9. Loose Coupling | Enabled with controls |
+| 9. Integrate and adapt technology | 10. Interoperability & Open Standards | Mandatory |
+| 10. Make better use of data | 7. Data Quality & Lineage | Mandatory |
 
----
-
-## Appendices
-
-### Appendix A: Glossary
+### Glossary
 
 - **BPSS**: Baseline Personnel Security Standard (vetting for civil servants)
 - **CHECK**: NCSC scheme for IT health checks (penetration testing)
 - **DLP**: Data Loss Prevention
-- **Entra ID**: Microsoft's new branding for Azure Active Directory (Azure AD)
 - **GDS**: Government Digital Service
 - **IAO**: Information Asset Owner
-- **M365DSC**: Microsoft 365 Desired State Configuration (IaC tool)
 - **NCSC**: National Cyber Security Centre (part of GCHQ)
 - **OFFICIAL**: UK Government Security Classification for routine business
 - **OFFICIAL-SENSITIVE**: Subset of OFFICIAL requiring enhanced controls
 - **PIM**: Privileged Identity Management (just-in-time admin access)
 - **SIRO**: Senior Information Risk Owner
-- **SPFx**: SharePoint Framework (modern development framework)
 - **TCoP**: UK Government Technology Code of Practice
 - **WCAG**: Web Content Accessibility Guidelines
 - **Zero Trust**: Security model assuming no implicit trust, verify explicitly
 
-### Appendix B: Reference Architecture Diagrams
-
-*(To be developed)*
-
-1. **M365 Logical Architecture**: Tenant structure, Azure AD, workload distribution
-2. **Network Diagram**: Connectivity, ExpressRoute (if applicable), VPN, internet breakout
-3. **Identity Architecture**: Azure AD, Conditional Access, MFA, PIM
-4. **Information Protection Flow**: Sensitivity labels, DLP, encryption
-5. **Data Flow Diagram**: External sharing, guest access, cross-border data flows
-6. **Integration Architecture**: Power Platform, Microsoft Graph, third-party apps
-7. **Disaster Recovery**: Multi-region, backup, BC/DR processes
-
-### Appendix C: Related Documents
-
-*(Links to supporting documentation)*
-
-1. **M365 Configuration Baseline**: M365DSC export of approved tenant configuration
-2. **Conditional Access Policy Catalog**: All policies with rationale
-3. **Sensitivity Label Taxonomy**: OFFICIAL, OFFICIAL-SENSITIVE definitions
-4. **Retention Schedule**: Document types and retention periods
-5. **Power Platform DLP Policies**: Approved and blocked connectors
-6. **Security Baseline**: CIS Microsoft 365 Foundations Benchmark, NCSC EUD Guidance
-7. **Incident Response Playbooks**: Specific procedures for M365 security incidents
-8. **Accessibility Guidelines**: WCAG compliance checklist for M365 content
-9. **Training Catalog**: Links to M365 learning paths (Microsoft Learn, internal training)
-10. **User Guides**: How-to documentation for end users
-
-### Appendix D: Compliance Mapping
-
-**NCSC Cloud Security Principles → M365 Controls**:
-
-| NCSC Principle | M365 Control | Validation |
-|----------------|--------------|------------|
-| 1. Data in transit protection | TLS 1.3 enforced, certificate pinning | Network trace, Security Score |
-| 2. Asset protection and resilience | UK South + UK West geo-redundancy | Tenant configuration |
-| 3. Separation between users | Sensitivity labels, tenant isolation | Purview compliance |
-| 4. Governance framework | SIRO/IAO appointed, ARB operational | Governance documentation |
-| 5. Operational security | Microsoft managed patching, Secure Score | Monthly reports |
-| 6. Personnel security | BPSS for all users, SC for admins | HR records |
-| 7. Secure development | SPFx security review, code scanning | Code review logs |
-| 8. Supply chain security | Microsoft attestations, third-party assessments | Vendor reviews |
-| 9. Secure user management | Azure AD, MFA, Conditional Access | Sign-in logs |
-| 10. Identity and authentication | Passwordless roadmap, FIDO2 | Authentication methods report |
-| 11. External interface protection | DLP, Conditional Access, allowlists | DLP reports |
-| 12. Secure service administration | PIM, PAW, admin audit logs | PIM reports |
-| 13. Audit information for users | Unified Audit Log, 7-year retention | Audit log validation |
-| 14. Secure use of service | Security awareness training | Training completion records |
-
-**Technology Code of Practice → Architecture Principles**:
-
-| TCoP Point | Principle | Status |
-|------------|-----------|--------|
-| 1. Define user needs | Principle 2 (GDS Standard Compliance) | Mandatory |
-| 2. Make things accessible | Principle 4 (Accessibility WCAG 2.2 AA) | Mandatory |
-| 3. Be open and use open source | Principle 5 (Open Standards) | Mandatory |
-| 4. Make use of open standards | Principle 5 (Open Standards) | Mandatory |
-| 5. Use cloud first | Principle 1 (Cloud-First UK Sovereignty) | Mandatory |
-| 6. Make things secure | Principle 3 (Security by Design) | Non-Negotiable |
-| 7. Make privacy integral | Principle 8 (Privacy by Design) | Mandatory |
-| 8. Share, reuse and collaborate | Principle 13 (Collaboration Governance) | Enabled with controls |
-| 9. Integrate and adapt technology | Principle 9 (Approved Tech Stack) | Mandatory |
-| 10. Make better use of data | Principle 7 (Data Quality and Lifecycle) | Mandatory |
-
 ---
 
-## Document Control
-
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | 2025-10-17 | Enterprise Architecture Team | Initial draft for M365 deployment |
-
-**Approvals** (To be obtained):
-
-| Role | Name | Signature | Date |
-|------|------|-----------|------|
-| CTO, Cabinet Office | [NAME] | _________ | [DATE] |
-| SIRO | [NAME] | _________ | [DATE] |
-| CISO | [NAME] | _________ | [DATE] |
-| Enterprise Architect | [NAME] | _________ | [DATE] |
-| DPO (Data Protection Officer) | [NAME] | _________ | [DATE] |
+**Generated by**: ArcKit `/arckit.principles` command
+**Generated on**: 2026-01-26
+**ArcKit Version**: 0.11.1
+**Project**: Microsoft 365 GCC-H Migration (Global)
+**AI Model**: Claude Opus 4.5
 
 ---
-
-**END OF DOCUMENT**
 
 *This document is OFFICIAL and should be handled in accordance with Government Security Classifications Policy.*
