@@ -1418,13 +1418,24 @@
                 // Handle initial hash or load default document
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
-                    loadDocument(path);
+                    // Check if path exists in manifest
+                    const pathExists = allDocuments.some(doc => doc.path === path);
 
-                    // Mark as active
-                    const link = document.querySelector(`a[data-path="${path}"]`);
-                    if (link) link.classList.add('active');
+                    if (pathExists) {
+                        loadDocument(path);
+                        // Mark as active
+                        const link = document.querySelector(`a[data-path="${path}"]`);
+                        if (link) link.classList.add('active');
+                    } else if (manifest.defaultDocument) {
+                        // Invalid hash, redirect to default
+                        const defaultPath = manifest.defaultDocument;
+                        window.location.hash = defaultPath;
+                        loadDocument(defaultPath);
+                        const link = document.querySelector(`a[data-path="${defaultPath}"]`);
+                        if (link) link.classList.add('active');
+                    }
                 } else if (manifest.defaultDocument) {
-                    // Load Architecture Principles as default
+                    // No hash, load Architecture Principles as default
                     const defaultPath = manifest.defaultDocument;
                     window.location.hash = defaultPath;
                     loadDocument(defaultPath);
