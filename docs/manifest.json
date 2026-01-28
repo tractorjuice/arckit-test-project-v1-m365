@@ -1,15 +1,18 @@
 {
-  "generated": "2026-01-26T12:00:00Z",
+  "generated": "2026-01-28T17:05:00Z",
   "repository": {
     "owner": "tractorjuice",
     "name": "arckit-test-project-v1-m365",
     "branch": "main"
   },
+  "defaultDocument": "projects/000-global/ARC-000-PRIN-v1.0.md",
   "global": [
     {
-      "path": ".arckit/memory/architecture-principles.md",
+      "path": "projects/000-global/ARC-000-PRIN-v1.0.md",
       "title": "Architecture Principles",
-      "category": "Architecture"
+      "category": "Architecture",
+      "documentId": "ARC-000-PRIN-v1.0",
+      "isDefault": true
     }
   ],
   "projects": [
@@ -18,39 +21,46 @@
       "name": "Exchange Online Migration",
       "documents": [
         {
-          "path": "projects/001-exchange-online-migration/requirements.md",
-          "title": "Requirements",
-          "category": "Discovery"
-        },
-        {
-          "path": "projects/001-exchange-online-migration/stakeholder-drivers.md",
+          "path": "projects/001-exchange-online-migration/ARC-001-STKE-v1.0.md",
           "title": "Stakeholder Drivers",
-          "category": "Discovery"
+          "category": "Discovery",
+          "documentId": "ARC-001-STKE-v1.0"
         },
         {
-          "path": "projects/001-exchange-online-migration/sow.md",
-          "title": "Statement of Work",
-          "category": "Procurement"
+          "path": "projects/001-exchange-online-migration/ARC-001-REQ-v1.0.md",
+          "title": "Requirements",
+          "category": "Discovery",
+          "documentId": "ARC-001-REQ-v1.0"
         },
         {
-          "path": "projects/001-exchange-online-migration/evaluation-criteria.md",
-          "title": "Evaluation Criteria",
-          "category": "Procurement"
-        },
-        {
-          "path": "projects/001-exchange-online-migration/traceability-matrix.md",
+          "path": "projects/001-exchange-online-migration/ARC-001-TRAC-v1.0.md",
           "title": "Traceability Matrix",
-          "category": "Governance"
+          "category": "Governance",
+          "documentId": "ARC-001-TRAC-v1.0"
+        },
+        {
+          "path": "projects/001-exchange-online-migration/ARC-001-SOW-v1.0.md",
+          "title": "Statement of Work",
+          "category": "Procurement",
+          "documentId": "ARC-001-SOW-v1.0"
+        },
+        {
+          "path": "projects/001-exchange-online-migration/ARC-001-EVAL-v1.0.md",
+          "title": "Evaluation Criteria",
+          "category": "Procurement",
+          "documentId": "ARC-001-EVAL-v1.0"
         }
       ],
       "diagrams": [
         {
-          "path": "projects/001-exchange-online-migration/diagrams/container-m365-exchange-online.md",
-          "title": "Container: M365 Exchange Online"
+          "path": "projects/001-exchange-online-migration/diagrams/ARC-001-DIAG-001-v1.0.md",
+          "title": "M365 Exchange Online Migration (C4 Container)",
+          "documentId": "ARC-001-DIAG-001-v1.0"
         },
         {
-          "path": "projects/001-exchange-online-migration/diagrams/sequence-identity-authentication.md",
-          "title": "Sequence: Identity Authentication"
+          "path": "projects/001-exchange-online-migration/diagrams/ARC-001-DIAG-002-v1.0.md",
+          "title": "M365 Identity and Authentication Flows",
+          "documentId": "ARC-001-DIAG-002-v1.0"
         }
       ],
       "decisions": [],
