@@ -1,5 +1,5 @@
 {
-  "generated": "2026-01-28T17:05:00Z",
+  "generated": "2026-02-03T12:00:00Z",
   "repository": {
     "owner": "tractorjuice",
     "name": "arckit-test-project-v1-m365",
@@ -54,7 +54,7 @@
       "diagrams": [
         {
           "path": "projects/001-exchange-online-migration/diagrams/ARC-001-DIAG-001-v1.0.md",
-          "title": "M365 Exchange Online Migration (C4 Container)",
+          "title": "M365 Exchange Online Migration",
           "documentId": "ARC-001-DIAG-001-v1.0"
         },
         {
@@ -64,7 +64,11 @@
         }
       ],
       "decisions": [],
-      "vendors": []
+      "wardleyMaps": [],
+      "dataContracts": [],
+      "reviews": [],
+      "vendors": [],
+      "research": []
     }
   ]
 }
